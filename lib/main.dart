@@ -36,6 +36,7 @@ class _MyHomePageState extends State {
     Widget body = Test1( contentWidth );
 //    Widget body = Test2( "Test", contentWidth );
 //    Widget body = Test2( "てすと", contentWidth );
+//    Widget body = Test3( "Flutter（フラッター）は、Googleによって開発されたフリーかつオープンソースのUIのSDKです。単一のコードベースから、Android、iOS、Linux、Mac OS、Windowsなど、複数のプラットフォーム向けのアプリケーションを開発することができます。", contentWidth );
 
     return Scaffold(
         appBar: AppBar(

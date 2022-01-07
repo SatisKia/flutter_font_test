@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyContainer extends Container {
-  MyContainer( {Key? key, required double width, required double height, alignment, child}) : super(
+  MyContainer( {Key? key, required double width, required double height, alignment = Alignment.topLeft, child}) : super(
       key: key,
       width: width,
       height: height,
@@ -14,31 +14,33 @@ class MyContainer extends Container {
 }
 
 class MyText extends Container {
-  MyText( String text, {Key? key, required double fontSize, required FontWeight fontWeight} ) : super(
+  MyText( String text, {Key? key, required double fontSize, required FontWeight fontWeight, TextOverflow? overflow = TextOverflow.visible} ) : super(
       key: key,
       decoration: BoxDecoration(
         border: Border.all(color: const Color( 0xffff0000) ),
       ),
       child: Text(
-          text,
-          textScaleFactor: 1.0, // これを指定すると、端末のフォントサイズ指定に影響を受けなくなる。
-          style: TextStyle(
-            height: 1.0, // これを指定すると、上下の余白がカットされる。指定しないと日本語と英語とで高さが異なる場合もある。
-            fontSize: fontSize,
-            fontWeight: fontWeight,
-            color: const Color( 0xff000000 ),
-          )
+        text,
+        textScaleFactor: 1.0, // これを指定すると、端末のフォントサイズ指定に影響を受けなくなる。
+        style: TextStyle(
+          height: 1.0, // これを指定すると、上下の余白がカットされる。指定しないと日本語と英語とで高さが異なる場合もある。
+          fontSize: fontSize,
+          fontWeight: fontWeight,
+          color: const Color( 0xff000000 ),
+        ),
+        softWrap: true,
+        overflow: overflow,
       )
   );
 }
 
 class Test1Row extends Row {
-  Test1Row( width, fontWeignt, String type, {Key? key} ) : super(key: key,
+  Test1Row( width, fontWeight, String type, {Key? key} ) : super(key: key,
       crossAxisAlignment: CrossAxisAlignment.start,
       children:[
-        MyText( "abcde", fontSize: width / 15, fontWeight: fontWeignt ),
-        MyText( "あいうえお", fontSize: width / 15, fontWeight: fontWeignt ),
-        MyText( "abcあいう", fontSize: width / 15, fontWeight: fontWeignt ),
+        MyText( "abcde", fontSize: width / 15, fontWeight: fontWeight ),
+        MyText( "あいうえお", fontSize: width / 15, fontWeight: fontWeight ),
+        MyText( "abcあいう", fontSize: width / 15, fontWeight: fontWeight ),
         Text( type ),
       ] );
 }
@@ -78,6 +80,22 @@ class Test2 extends Column {
           MyContainer( width: width / 3, height: width / 3, alignment: Alignment.bottomCenter, child: MyText( text, fontSize: width / 12, fontWeight: FontWeight.normal ) ),
           MyContainer( width: width / 3, height: width / 3, alignment: Alignment.bottomRight, child: MyText( text, fontSize: width / 12, fontWeight: FontWeight.normal ) ),
         ] )
+      ]
+  );
+}
+
+class Test3 extends Column {
+  Test3( text, width, {Key? key} ) : super(key: key,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text( "TextOverflow.clip" ),
+        MyContainer( width: width * 0.9, height: width / 4, child: MyText( text, fontSize: width / 15, fontWeight: FontWeight.normal, overflow: TextOverflow.clip ) ),
+        Text( "TextOverflow.ellipsis" ),
+        MyContainer( width: width * 0.9, height: width / 4, child: MyText( text, fontSize: width / 15, fontWeight: FontWeight.normal, overflow: TextOverflow.ellipsis ) ),
+        Text( "TextOverflow.fade" ),
+        MyContainer( width: width * 0.9, height: width / 4, child: MyText( text, fontSize: width / 15, fontWeight: FontWeight.normal, overflow: TextOverflow.fade ) ),
+        Text( "TextOverflow.visible" ),
+        MyContainer( width: width * 0.9, height: width / 4, child: MyText( text, fontSize: width / 15, fontWeight: FontWeight.normal, overflow: TextOverflow.visible ) ),
       ]
   );
 }
